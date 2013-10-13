@@ -1,3 +1,6 @@
+# Set the Codeigniter Env to production (allowed production, testing, development)
+SetEnv CI_ENV development
+
 <IfModule mod_rewrite.c>
  
     RewriteEngine On
