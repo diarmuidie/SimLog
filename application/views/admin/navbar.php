@@ -15,6 +15,9 @@
                 <li class="<?php echo ($this->uri->segment(2)=="add" ? 'active' : ''); ?>"><a href="<?php echo base_url() ;?>admin/add">Add Post</a></li>
                 <li class="<?php echo ($this->uri->segment(2)=="media" ? 'active' : ''); ?>"><a href="<?php echo base_url() ;?>admin/media">Media</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="<?php echo base_url(); ?>admin/logout">Logout</a></li>
+            </ul>
         </div><!--/.nav-collapse -->
     </div>
 </div>
