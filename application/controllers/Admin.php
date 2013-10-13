@@ -12,7 +12,7 @@ class Admin extends CI_Controller {
 
         //comment out this line to remove all authorization requirements
         $this->_authorize();
-        $this->load->model('BlogModel');
+        $this->load->model('Blog_model');
 
         $this->data = array(
             'title' => '',
@@ -101,7 +101,7 @@ class Admin extends CI_Controller {
     public function index()
     {
 
-        $data['entries'] = $this->BlogModel->get_entries();
+        $data['entries'] = $this->Blog_model->get_entries();
 
 
         $this->data['content'] = $this->load->view('admin/list', $data, TRUE);
@@ -111,7 +111,7 @@ class Admin extends CI_Controller {
 
     public function draft() {
 
-        $data['entries'] = $this->BlogModel->get_draft_entries();
+        $data['entries'] = $this->Blog_model->get_draft_entries();
 
         $this->data['content'] = $this->load->view('admin/list', $data, TRUE);
         $this->load->view('admin/template', $this->data);
@@ -141,17 +141,17 @@ class Admin extends CI_Controller {
                 'slug' => url_title($this->input->post('title')),
                 'markdown' => $this->input->post('markdown'),
                 'published' => $published,
-                'html' => $this->BlogModel->markdown($this->input->post('markdown')),
+                'html' => $this->Blog_model->markdown($this->input->post('markdown')),
                 'added' => date('Y-m-d H:i:s')
             );
 
             if (url_title($this->input->post('title')) == '') {
                 $this->data['error'] = 'Title Cannot be blank';
-            } elseif (!$this->BlogModel->check_unique_slug(url_title($this->input->post('title')))) {
+            } elseif (!$this->Blog_model->check_unique_slug(url_title($this->input->post('title')))) {
                 $this->data['error'] = 'Title already in use';
             } else {
 
-                $entry = $this->BlogModel->add_entry($data);
+                $entry = $this->Blog_model->add_entry($data);
                 redirect('admin/edit/' . $entry);
             }
 
@@ -182,27 +182,27 @@ class Admin extends CI_Controller {
                 'markdown' => $this->input->post('markdown'),
                 'edited' => date('Y-m-d H:i:s'),
                 'published' => $published,
-                'html' => $this->BlogModel->markdown($this->input->post('markdown')),
+                'html' => $this->Blog_model->markdown($this->input->post('markdown')),
                 'id' => $id
             );
 
-            if (!$this->BlogModel->check_unique_slug(url_title($this->input->post('title')), $id)) {
+            if (!$this->Blog_model->check_unique_slug(url_title($this->input->post('title')), $id)) {
                 $this->data['error'] = 'Title already in use';
             } else {
 
-                $entry = $this->BlogModel->update_entry($data);
+                $entry = $this->Blog_model->update_entry($data);
 
                 redirect('admin/edit/' . $id);
             }
 
         } elseif(!empty($delete)) {
 
-            $this->BlogModel->delete_entry($id);
+            $this->Blog_model->delete_entry($id);
             redirect('admin/');
 
         } else {
 
-            $data = $this->BlogModel->get_entry_id($id);
+            $data = $this->Blog_model->get_entry_id($id);
             if ($data['published'] != "" AND !is_null($data['published'])) {
                 $data['published'] = date('Y-m-d',strtotime($data['published']));
             }
@@ -225,9 +225,9 @@ class Admin extends CI_Controller {
 
     public function preview($id) {
 
-        $data = $this->BlogModel->get_entry_id($id);
+        $data = $this->Blog_model->get_entry_id($id);
 
-        $data['html'] = $this->BlogModel->markdown($data['markdown']);
+        $data['html'] = $this->Blog_model->markdown($data['markdown']);
 
         $this->data['content'] = $this->load->view('admin/preview', $data, TRUE);
 

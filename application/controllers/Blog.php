@@ -6,9 +6,9 @@ class Blog extends My_Controller {
 
 	public function index($page = 0)
 	{
-        $this->load->model('BlogModel');
+        $this->load->model('Blog_model');
 
-        $entries = $this->BlogModel->get_entries($page);
+        $entries = $this->Blog_model->get_entries($page);
 
         if(empty($entries)) {
             show_error('No More Posts Available', 404 );
@@ -24,9 +24,9 @@ class Blog extends My_Controller {
         if ($slug === NULL) {
             redirect('blog');
         }
-        $this->load->model('BlogModel');
+        $this->load->model('Blog_model');
 
-        $entry = $this->BlogModel->get_entry_slug($slug);
+        $entry = $this->Blog_model->get_entry_slug($slug);
 
         if(is_null($entry)) {
             show_error('Post Not Found', 404 );

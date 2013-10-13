@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class MediaModel extends CI_Model {
+class Media_model extends CI_Model {
 
     function get_media($folder) {
         $this->load->helper('file');

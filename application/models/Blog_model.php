@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class BlogModel extends CI_Model {
+class Blog_model extends CI_Model {
 
     CONST TABLE = 'blog';
 
