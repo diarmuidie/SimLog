@@ -21,7 +21,7 @@
     <header class="home clearfix">
         <div class="logo">
             <!--<img src="https://secure.gravatar.com/avatar/6058fd1ccb544cc5c12b5b21880086bc?s=100" alt="diarmuid"/>-->
-            <img src="<?php echo base_url(); ?>diarmuid.jpg" alt="diarmuid"/>
+            <img src="<?php echo base_url(); ?>diarmuid.jpg" width="100px" height="100px" alt="diarmuid"/>
             <h1>Diarmuid.ie</h1>
         </div>
         <nav>
@@ -64,7 +64,6 @@
 
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-2.0.3.min.js"><\/script>')</script>-->
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/retina.js"></script>
 
 <!--<script>
     var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
