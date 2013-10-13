@@ -215,8 +215,8 @@ class Admin extends CI_Controller {
     }
 
     public function media() {
-        $this->load->model('MediaModel');
-        $data['files'] = $this->MediaModel->get_media('media/');
+        $this->load->model('Media_model');
+        $data['files'] = $this->Media_model->get_media('media/');
 
         $this->data['content'] = $this->load->view('admin/media', $data, TRUE);
         $this->load->view('admin/template', $this->data);
