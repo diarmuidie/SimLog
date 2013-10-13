@@ -11,7 +11,24 @@ class Media_model extends CI_Model {
 
     function get_media($folder) {
         $this->load->helper('file');
-        return get_filenames($folder);
+
+        $files = get_filenames($folder);
+
+        $return = array();
+        $url = parse_url(base_url());
+
+        foreach ($files as $file) {
+
+            $return[] = array(
+                'filename' => $file,
+                'url' => "//" . $url['host'] . $url['path'] . "media/" . $file,
+                'mime' => get_mime_by_extension($file),
+                'extension' => pathinfo ($file, PATHINFO_EXTENSION),
+            );
+
+        }
+
+        return $return;
     }
 
     function resize_media($file, $width = 740) {

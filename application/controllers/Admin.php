@@ -215,6 +215,30 @@ class Admin extends CI_Controller {
     }
 
     public function media() {
+
+        $upload = $this->input->post('upload');
+        $delete = $this->input->post('delete');
+
+        if (!empty($upload)) {
+
+            $config['upload_path'] = './media/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|tiff|png|mp3|wav|mp4|flv|avi';
+
+            $this->load->library('upload', $config);
+
+            if ( ! $this->upload->do_upload())
+            {
+                $this->data['error'] = $this->upload->display_errors();
+
+            }
+            else
+            {
+                $data = array('upload_data' => $this->upload->data());
+                redirect('admin/media/');
+
+            }
+        }
+
         $this->load->model('Media_model');
         $data['files'] = $this->Media_model->get_media('media/');
 
