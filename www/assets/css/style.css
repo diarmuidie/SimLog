@@ -10,6 +10,8 @@ body {
   color: #333333;
   width: 720px;
   margin: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 a {
   color: #3c87c4;
