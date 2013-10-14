@@ -1,8 +1,1 @@
-<?php
-/**
- * Created by JetBrains PhpStorm.
- * User: diarmuid
- * Date: 12/10/2013
- * Time: 12:20
- * To change this template use File | Settings | File Templates.
- */
+<p> Hi I'm diarmuid. I work at Intel in Dublin, Ireland as a Manufacturing Engineer. In my free time I build websites and hack together projects with Arduinos.</p>

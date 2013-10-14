@@ -8,6 +8,7 @@ class MY_Controller extends CI_Controller
 
         $this->template = array(
             'title' => 'Diarmuid.ie :: ',
+            'navbar' => $this->load->view('navbar', null, true),
             'content' => '',
             'footer' => ''
         );
