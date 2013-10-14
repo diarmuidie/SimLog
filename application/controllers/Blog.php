@@ -29,7 +29,7 @@ class Blog extends My_Controller {
         $entry = $this->Blog_model->get_entry_slug($slug);
 
         if(is_null($entry)) {
-            show_error('Post Not Found', 404 );
+            show_404();
         }
 
         $this->template['title'] .= $entry['title'];
