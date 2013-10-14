@@ -6,7 +6,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/normalize.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">
 
     <!--[if lt IE 9]>

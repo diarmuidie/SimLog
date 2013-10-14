@@ -6,7 +6,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="//diarmuid.ie/assets/css/normalize.min.css">
     <link rel="stylesheet" href="//diarmuid.ie/assets/css/style.css">
 
     <!--[if lt IE 9]>
