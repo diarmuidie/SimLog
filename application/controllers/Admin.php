@@ -250,8 +250,9 @@ class Admin extends CI_Controller {
 
     }
 
-    public function clearcache() {
+    public function purge() {
         $this->output->clear_all_cache();
+        redirect('admin');
     }
 
     public function preview($id) {
