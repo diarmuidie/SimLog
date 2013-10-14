@@ -190,7 +190,10 @@ class Admin extends CI_Controller {
                 $this->data['error'] = 'Title already in use';
             } else {
 
-                $entry = $this->Blog_model->update_entry($data);
+                $this->Blog_model->update_entry($data);
+
+                //Clear the caches
+                $this->output->clear_all_cache();
 
                 redirect('admin/edit/' . $id);
             }
@@ -245,6 +248,10 @@ class Admin extends CI_Controller {
         $this->data['content'] = $this->load->view('admin/media', $data, TRUE);
         $this->load->view('admin/template', $this->data);
 
+    }
+
+    public function clearcache() {
+        $this->output->clear_all_cache();
     }
 
     public function preview($id) {

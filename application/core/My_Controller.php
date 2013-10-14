@@ -12,5 +12,8 @@ class MY_Controller extends CI_Controller
             'footer' => ''
         );
 
+        if(ENVIRONMENT === 'production') {
+            $this->output->cache(60);
+        }
     }
 }
