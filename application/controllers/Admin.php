@@ -15,7 +15,7 @@ class Admin extends CI_Controller {
         $this->load->model('Blog_model');
 
         $this->data = array(
-            'title' => '',
+            'title' => 'Admin :: Diarmuid.ie',
             'content' => '',
             'navbar' => $this->load->view('admin/navbar', Null, TRUE)
         );

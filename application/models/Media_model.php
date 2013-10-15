@@ -32,9 +32,22 @@ class Media_model extends CI_Model {
                     'mime' => get_mime_by_extension($file),
                     'extension' => pathinfo ($file, PATHINFO_EXTENSION),
                 );
-
-
             }
+        }
+
+        // Find the original and 2x version if it exists
+        foreach ($return as $key => $file) {
+            $original = pathinfo($file['filename'], PATHINFO_FILENAME) . '_original.' . pathinfo($file['filename'], PATHINFO_EXTENSION);
+            $zoom = pathinfo($file['filename'], PATHINFO_FILENAME) . '@2x.' . pathinfo($file['filename'], PATHINFO_EXTENSION);
+
+            if (in_array($original, $files)) {
+                $return[$key]['original'] = $original;
+            }
+
+            if (in_array($zoom, $files)) {
+                $return[$key]['2x'] = $zoom;
+            }
+
         }
 
         return $return;
