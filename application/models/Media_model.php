@@ -48,6 +48,10 @@ class Media_model extends CI_Model {
         // Risize if the image is too big
         if ($dims[0] > $width) {
 
+            // Temporarily bump the memory allowance to allow image resizing
+            $memory_limit = ini_get('memory_limit');
+            ini_set('memory_limit', '324M');
+
             // Backup the original file
             copy($file, $path['dirname'] . '/' . $path['filename'] . '_original' . '.' . $path['extension']);
 
@@ -60,6 +64,7 @@ class Media_model extends CI_Model {
             // Resize image to smaller version
             $this->load->library('image_lib', $config);
             $this->image_lib->resize();
+            $this->image_lib->clear();
 
             // If the image is big enough generate a 2x retina version
             if ($dims[0] >= $width * 1.5) {
@@ -69,10 +74,15 @@ class Media_model extends CI_Model {
                     'width' => $width * 2,
                     'new_image' => $path['dirname'] . '/' . $path['filename'] . '@2x' . '.' . $path['extension']
                 );
-                $this->image_lib->clear();
                 $this->image_lib->initialize($config);
                 $this->image_lib->resize();
+                $this->image_lib->clear();
+
             }
+
+            // return memory limit to normal
+            ini_set('memory_limit', $memory_limit);
+
         }
     }
 
