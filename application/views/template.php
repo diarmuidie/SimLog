@@ -36,6 +36,10 @@
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-2.0.3.min.js"><\/script>')</script>-->
 
+<?php if($this->uri->segment(1) == 'blog') { ?>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/retina.min.js"></script>
+<?php } ?>
+
 <!--<script>
     var _gaq=[['_setAccount','UA-XXXXX-X'],['_gat._anonymizeIp'],['_trackPageview']];
     (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
