@@ -9,6 +9,8 @@
 
 class Media_model extends CI_Model {
 
+    const WIDTH = 720;
+
     function get_media($folder) {
         $this->load->helper('file');
 
@@ -19,31 +21,59 @@ class Media_model extends CI_Model {
 
         foreach ($files as $file) {
 
-            $return[] = array(
-                'filename' => $file,
-                'url' => "//" . $url['host'] . $url['path'] . "media/" . $file,
-                'mime' => get_mime_by_extension($file),
-                'extension' => pathinfo ($file, PATHINFO_EXTENSION),
-            );
+            // Only include the base image and exclude index.html
+            if (substr(pathinfo($file, PATHINFO_FILENAME), -8) != 'original'
+                AND substr(pathinfo($file, PATHINFO_FILENAME), -3) != '@2x'
+                AND $file != 'index.html') {
 
+                $return[] = array(
+                    'filename' => $file,
+                    'url' => "//" . $url['host'] . $url['path'] . "media/" . $file,
+                    'mime' => get_mime_by_extension($file),
+                    'extension' => pathinfo ($file, PATHINFO_EXTENSION),
+                );
+
+
+            }
         }
 
         return $return;
     }
 
-    function resize_media($file, $width = 740) {
+    function resize($file, $width = self::WIDTH) {
 
-        $config = array(
-            'image_library' => 'gd2',
-            'source_image'	=> $file,
-            'create_thumb' => TRUE,
-            'maintain_ratio' => TRUE,
-            'width'	 => 75,
-            'master_dim' => 'width'
-        );
-        $this->load->library('image_lib', $config);
+        $path = pathinfo($file);
+        $dims = getimagesize($file);
 
-        $this->image_lib->resize();
+        // Risize if the image is too big
+        if ($dims[0] > $width) {
+
+            // Backup the original file
+            copy($file, $path['dirname'] . '/' . $path['filename'] . '_original' . '.' . $path['extension']);
+
+            $config = array(
+                'source_image' => $file,
+                'master_dim' => 'width',
+                'width' => $width,
+            );
+
+            // Resize image to smaller version
+            $this->load->library('image_lib', $config);
+            $this->image_lib->resize();
+
+            // If the image is big enough generate a 2x retina version
+            if ($dims[0] >= $width * 1.5) {
+                $config = array(
+                    'source_image' => $path['dirname'] . '/' . $path['filename'] . '_original' . '.' . $path['extension'],
+                    'master_dim' => 'width',
+                    'width' => $width * 2,
+                    'new_image' => $path['dirname'] . '/' . $path['filename'] . '@2x' . '.' . $path['extension']
+                );
+                $this->image_lib->clear();
+                $this->image_lib->initialize($config);
+                $this->image_lib->resize();
+            }
+        }
     }
 
 }

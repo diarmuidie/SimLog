@@ -221,6 +221,7 @@ class Admin extends CI_Controller {
 
         $upload = $this->input->post('upload');
         $delete = $this->input->post('delete');
+        $this->load->model('Media_model');
 
         if (!empty($upload)) {
 
@@ -236,13 +237,18 @@ class Admin extends CI_Controller {
             }
             else
             {
-                $data = array('upload_data' => $this->upload->data());
+                $data = $this->upload->data();
+
+                // Is an image uploaded
+                if ($dims = getimagesize($data['full_path'])) {
+                    $this->Media_model->resize($data['full_path']);
+                }
+
                 redirect('admin/media/');
 
             }
         }
 
-        $this->load->model('Media_model');
         $data['files'] = $this->Media_model->get_media('media/');
 
         $this->data['content'] = $this->load->view('admin/media', $data, TRUE);
