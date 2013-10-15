@@ -329,6 +329,9 @@ header.home nav li {
 .postlist {
   font-size: 1.2em;
 }
+.postlist li {
+  margin-bottom: 15px;
+}
 .main-container h1 {
   text-align: center;
   font-size: 2.0em;

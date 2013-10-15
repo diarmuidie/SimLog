@@ -15,9 +15,9 @@
     <?php foreach ($files as $file) { ?>
         <li>
             <a href="<?php echo $file['url'] ?>"><?php echo $file['filename']; ?></a>
-            (<?php echo $file['url'] ?>)
             <?php echo(isset($file['original']))? '(<a href="' . base_url() . '/media/' . $file['original'] . '">Orig</a>)' : ""; ?>
             <?php echo(isset($file['2x']))? '(<a href="' . base_url() . '/media/' . $file['2x'] . '">2x</a>)' : ""; ?>
+            (<?php echo $file['url'] ?>)
         </li>
     <?php } ?>
 </ul>
