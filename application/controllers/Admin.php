@@ -256,9 +256,45 @@ class Admin extends CI_Controller {
 
     }
 
-    public function purge() {
-        $this->output->clear_all_cache();
-        redirect('admin');
+    public function cache() {
+
+        $purge = $this->input->post('purge');
+
+        if (!empty($purge)) {
+            $this->output->clear_all_cache();
+            redirect('admin/cache');
+        }
+
+        $this->load->helper('file');
+        $caches = get_filenames(APPPATH . 'cache/');
+
+        // TODO: Move all this code into some sort of model
+        foreach($caches as $cache) {
+
+            if ($cache != 'index.html') {
+                $content = read_file(APPPATH . 'cache/' . $cache);
+
+                // Look for embedded serialized file info.
+                preg_match('/^(.*)ENDCI--->/', $content, $match);
+
+                if ($match[1]) {
+                    $cache_info = unserialize($match[1]);
+                } else {
+                    $cache_info['expire'] = '';
+                }
+                $data['caches'][] = array(
+                    'filename' => $cache,
+                    'expire' => $cache_info['expire'],
+                    'modified' => filemtime(APPPATH . 'cache/' . $cache)
+                );
+            }
+
+        }
+
+        $this->data['content'] = $this->load->view('admin/cache', $data, TRUE);
+        $this->load->view('admin/template', $this->data);
+
+
     }
 
     public function preview($id) {

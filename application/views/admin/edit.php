@@ -6,6 +6,7 @@
 
         <div class="form-group">
             <div id="editor"><?php echo ($markdown? $markdown: ""); ?></div>
+            <p class="help-block"><a href="http://daringfireball.net/projects/markdown/syntax">Syntax help</a></p>
         </div>
 
         <div class="form-group">
@@ -19,7 +20,8 @@
         </div>
 
         <button class="btn btn-primary" type="submit" name="submit" value="Submit">Save</button>
-        <button class="btn" type="submit" name="delete" value="delete">Delete</button>
+        <a class="btn btn-default" href="<?php echo base_url(); ?>admin/preview/<?php echo $id; ?>">Preview</a>
+        <button class="btn btn-danger" type="submit" name="delete" value="delete">Delete</button>
 
     </form>
 

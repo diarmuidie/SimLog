@@ -14,7 +14,7 @@
                 <li class="<?php echo ($this->uri->segment(2)=="draft" ? 'active' : ''); ?>"><a href="<?php echo base_url() ;?>admin/draft">Draft</a></li>
                 <li class="<?php echo ($this->uri->segment(2)=="add" ? 'active' : ''); ?>"><a href="<?php echo base_url() ;?>admin/add">Add Post</a></li>
                 <li class="<?php echo ($this->uri->segment(2)=="media" ? 'active' : ''); ?>"><a href="<?php echo base_url() ;?>admin/media">Media</a></li>
-                <li ><a href="<?php echo base_url() ;?>admin/purge">Purge Cache</a></li>
+                <li class="<?php echo ($this->uri->segment(2)=="cache" ? 'active' : ''); ?>"><a href="<?php echo base_url() ;?>admin/cache">Cache</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="<?php echo base_url(); ?>admin/logout">Logout</a></li>

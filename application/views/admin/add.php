@@ -6,6 +6,7 @@
 
         <div class="form-group">
             <div id="editor"></div>
+            <p class="help-block"><a href="http://daringfireball.net/projects/markdown/syntax">Syntax help</a></p>
         </div>
 
         <div class="form-group">
