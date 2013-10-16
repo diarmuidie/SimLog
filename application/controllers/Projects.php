@@ -21,13 +21,6 @@ class Projects extends My_Controller {
 	 */
 	public function index()
 	{
-        $this->load->model('Tag_model');
-        $query = $this->Tag_model->link_tag('nteresting', 2);
-
-        var_dump($query);
-        var_dump($this->db->last_query());
-        die;
-
         $this->template['title'] .= "Projects";
         $this->template['content'] = $this->load->view('pages/projects', Null, true);
         $this->load->view('template', $this->template);
