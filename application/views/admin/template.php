@@ -13,10 +13,6 @@
     <!-- Custom styles for this template -->
     <link href="<?php echo base_url(); ?>assets/css/admin/custom.css" rel="stylesheet">
 
-    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>-->
-
-    <script src="<?php echo base_url(); ?>assets/js/admin/epiceditor.min.js"></script>
-
 </head>
 
 <body>
@@ -30,6 +26,11 @@
         <?php echo $content; ?>
 
     </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/admin/epiceditor.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/admin/bootstrap-tagsinput.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/admin/typeahead.min.js"></script>
 
 </body>
 </html>

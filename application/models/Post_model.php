@@ -7,9 +7,14 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class Blog_model extends CI_Model {
+class Post_model extends CI_Model {
 
-    CONST TABLE = 'blog';
+    CONST TABLE = 'post';
+
+    function __construct() {
+        parent::__construct();
+        $this->load->model('Tag_model');
+    }
 
     function get_entries($page = 0, $count = 30) {
 

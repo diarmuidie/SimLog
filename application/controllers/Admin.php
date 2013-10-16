@@ -12,7 +12,9 @@ class Admin extends CI_Controller {
 
         //comment out this line to remove all authorization requirements
         $this->_authorize();
-        $this->load->model('Blog_model');
+
+        $this->load->model('Post_model');
+        $this->load->model('Tag_model');
 
         $this->data = array(
             'title' => 'Admin :: Diarmuid.ie',
@@ -101,7 +103,7 @@ class Admin extends CI_Controller {
     public function index()
     {
 
-        $data['entries'] = $this->Blog_model->get_entries();
+        $data['entries'] = $this->Post_model->get_entries();
 
 
         $this->data['content'] = $this->load->view('admin/list', $data, TRUE);
@@ -111,7 +113,7 @@ class Admin extends CI_Controller {
 
     public function draft() {
 
-        $data['entries'] = $this->Blog_model->get_draft_entries();
+        $data['entries'] = $this->Post_model->get_draft_entries();
 
         $this->data['content'] = $this->load->view('admin/list', $data, TRUE);
         $this->load->view('admin/template', $this->data);
@@ -141,17 +143,17 @@ class Admin extends CI_Controller {
                 'slug' => url_title($this->input->post('title')),
                 'markdown' => $this->input->post('markdown'),
                 'published' => $published,
-                'html' => $this->Blog_model->markdown($this->input->post('markdown')),
+                'html' => $this->Post_model->markdown($this->input->post('markdown')),
                 'added' => date('Y-m-d H:i:s')
             );
 
             if (url_title($this->input->post('title')) == '') {
                 $this->data['error'] = 'Title Cannot be blank';
-            } elseif (!$this->Blog_model->check_unique_slug(url_title($this->input->post('title')))) {
+            } elseif (!$this->Post_model->check_unique_slug(url_title($this->input->post('title')))) {
                 $this->data['error'] = 'Title already in use';
             } else {
 
-                $entry = $this->Blog_model->add_entry($data);
+                $entry = $this->Post_model->add_entry($data);
                 redirect('admin/edit/' . $entry);
             }
 
@@ -182,15 +184,17 @@ class Admin extends CI_Controller {
                 'markdown' => $this->input->post('markdown'),
                 'edited' => date('Y-m-d H:i:s'),
                 'published' => $published,
-                'html' => $this->Blog_model->markdown($this->input->post('markdown')),
+                'html' => $this->Post_model->markdown($this->input->post('markdown')),
                 'id' => $id
             );
 
-            if (!$this->Blog_model->check_unique_slug(url_title($this->input->post('title')), $id)) {
+            if (!$this->Post_model->check_unique_slug(url_title($this->input->post('title')), $id)) {
                 $this->data['error'] = 'Title already in use';
             } else {
 
-                $this->Blog_model->update_entry($data);
+                $this->Post_model->update_entry($data);
+
+                $this->Tag_model->add_tags($this->input->post('tags'), $id);
 
                 //Clear the caches
                 $this->output->clear_all_cache();
@@ -200,12 +204,14 @@ class Admin extends CI_Controller {
 
         } elseif(!empty($delete)) {
 
-            $this->Blog_model->delete_entry($id);
+            $this->Post_model->delete_entry($id);
             redirect('admin/');
 
         } else {
 
-            $data = $this->Blog_model->get_entry_id($id);
+            $data = $this->Post_model->get_entry_id($id);
+            $data['tags'] = $this->Tag_model->get_post_tags($id, True);
+
             if ($data['published'] != "" AND !is_null($data['published'])) {
                 $data['published'] = date('Y-m-d',strtotime($data['published']));
             }
@@ -299,9 +305,9 @@ class Admin extends CI_Controller {
 
     public function preview($id) {
 
-        $data = $this->Blog_model->get_entry_id($id);
+        $data = $this->Post_model->get_entry_id($id);
 
-        $data['html'] = $this->Blog_model->markdown($data['markdown']);
+        $data['html'] = $this->Post_model->markdown($data['markdown']);
 
         $this->data['content'] = $this->load->view('admin/preview', $data, TRUE);
 
@@ -310,4 +316,18 @@ class Admin extends CI_Controller {
         $this->load->view('admin/template', $this->data);
 
     }
+
+    public function tags_list() {
+
+        $tags = $this->Tag_model->get_all_tags();
+
+        foreach($tags as $tag) {
+            $json[] = $tag['tag'];
+        }
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($json));
+    }
+
 }

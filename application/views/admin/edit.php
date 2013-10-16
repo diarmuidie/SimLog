@@ -15,6 +15,11 @@
         <hr/>
 
         <div class="form-group">
+            <label for="tags">Tags</label>
+            <input type="text" class="form-control input-lg" value="<?php echo ($tags ? $tags : ""); ?>" data-role="tagsinput" name="tags"/>
+        </div>
+
+        <div class="form-group">
             <label for="published">Publish Date</label>
             <input type="date" class="form-control inline" value="<?php echo ($published ? $published : ""); ?>" name="published">
         </div>
@@ -39,5 +44,14 @@
                 },
                 clientSideStorage: false
             }).load();
+
+            var elt = $("input[name='tags']");
+            elt.tagsinput('input').typeahead({
+                prefetch: '<?php echo base_url(); ?>admin/tags_list'
+            }).bind('typeahead:selected', $.proxy(function (obj, datum) {
+                    this.tagsinput('add', datum.value);
+                    this.tagsinput('input').typeahead('setQuery', '');
+                }, elt));
+
         }
     </script>

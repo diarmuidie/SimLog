@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.29)
 # Database: simlog
-# Generation Time: 2013-10-12 18:31:02 +0000
+# Generation Time: 2013-10-16 19:58:27 +0000
 # ************************************************************
 
 
@@ -20,12 +20,10 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table blog
+# Dump of table post
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `blog`;
-
-CREATE TABLE `blog` (
+CREATE TABLE `post` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` text,
   `slug` varchar(256) DEFAULT NULL,
@@ -37,6 +35,31 @@ CREATE TABLE `blog` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Dump of table post_tag
+# ------------------------------------------------------------
+
+CREATE TABLE `post_tag` (
+  `post_id` int(11) unsigned NOT NULL,
+  `tag_id` int(11) unsigned NOT NULL,
+  KEY `post_id` (`post_id`),
+  KEY `tag_id` (`tag_id`),
+  CONSTRAINT `post_tag_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`),
+  CONSTRAINT `post_tag_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table tag
+# ------------------------------------------------------------
+
+CREATE TABLE `tag` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `tag` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
