@@ -274,6 +274,8 @@ class Admin extends CI_Controller {
         $this->load->helper('file');
         $caches = get_filenames(APPPATH . 'cache/');
 
+        $data = array();
+
         // TODO: Move all this code into some sort of model
         foreach($caches as $cache) {
 
@@ -287,15 +289,23 @@ class Admin extends CI_Controller {
                     $cache_info = unserialize($match[1]);
                 } else {
                     $cache_info['expire'] = '';
+                    $cache_info['uri'] = 'undefined';
                 }
+
                 $data['caches'][] = array(
                     'filename' => $cache,
+                    'uri' => $cache_info['uri'],
                     'expire' => $cache_info['expire'],
                     'modified' => filemtime(APPPATH . 'cache/' . $cache)
                 );
             }
 
         }
+
+        // Sort the caches newest to oldest
+        usort($data['caches'], function($a, $b) {
+                return $b['expire'] - $a['expire'];
+            });
 
         $this->data['content'] = $this->load->view('admin/cache', $data, TRUE);
         $this->load->view('admin/template', $this->data);
