@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class MY_Output
+ */
 class MY_Output extends CI_Output
 {
     /**
@@ -80,6 +83,38 @@ class MY_Output extends CI_Output
 
         // Send HTTP cache-control headers to browser to match file cache settings.
         $this->set_cache_header($_SERVER['REQUEST_TIME'], $expire);
+    }
+
+    /**
+     * Delete cache
+     *
+     * @param	string	$uri	URL string
+     * @return	bool
+     */
+    public function delete_cache_url($url)
+    {
+        $CI =& get_instance();
+        $cache_path = $CI->config->item('cache_path');
+        if ($cache_path === '')
+        {
+            $cache_path = APPPATH.'cache/';
+        }
+
+        if ( ! is_dir($cache_path))
+        {
+            log_message('error', 'Unable to find cache path: '.$cache_path);
+            return FALSE;
+        }
+
+        $cache_path .= md5($url);
+
+        if ( ! @unlink($cache_path))
+        {
+            log_message('error', 'Unable to delete cache file for '.$url);
+            return FALSE;
+        }
+
+        return TRUE;
     }
 
 }

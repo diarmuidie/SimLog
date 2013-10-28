@@ -106,7 +106,7 @@ class Admin extends CI_Controller {
         $data['entries'] = $this->Post_model->get_entries();
 
 
-        $this->data['content'] = $this->load->view('admin/list', $data, TRUE);
+        $this->data['content'] = $this->load->view('admin/published', $data, TRUE);
         $this->load->view('admin/template', $this->data);
 
     }
@@ -115,7 +115,7 @@ class Admin extends CI_Controller {
 
         $data['entries'] = $this->Post_model->get_draft_entries();
 
-        $this->data['content'] = $this->load->view('admin/list', $data, TRUE);
+        $this->data['content'] = $this->load->view('admin/draft', $data, TRUE);
         $this->load->view('admin/template', $this->data);
 
     }
@@ -267,7 +267,11 @@ class Admin extends CI_Controller {
         $purge = $this->input->post('purge');
 
         if (!empty($purge)) {
-            $this->output->clear_all_cache();
+            if ($purge == 'all') {
+                $this->output->clear_all_cache();
+            } else {
+                $this->output->delete_cache_url($purge);
+            }
             redirect('admin/cache');
         }
 
