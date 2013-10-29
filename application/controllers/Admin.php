@@ -82,11 +82,12 @@ class Admin extends CI_Controller {
             {
                 $redirect = $this->session->userdata('returnurl');
                 $this->session->unset_userdata('returnurl');
+                log_message('info', 'Successful login u:' . $user . ' uri:' . $redirect);
                 redirect($redirect);
             }
             else
             {
-                log_message('error', 'Failed login u:' . $user . ' p:' . $pass . ' uri:' . uri_string());
+                log_message('error', 'Failed login u:' . $user . ' p:' . $pass . ' uri:' . $redirect);
                 $data['errors'][] = "Username or password were incorrect. Please try again.";
             }
         }
