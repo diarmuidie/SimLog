@@ -53,6 +53,7 @@ class Admin extends CI_Controller {
             {
                 case basic_auth::ERROR_USER_NOT_AUTHORIZED:
                     $redirect = 'admin/login';
+                    $this->session->set_userdata('returnurl', uri_string());
                     break;
 
                 case basic_auth::ERROR_USER_NOT_LOGGED_IN:
@@ -79,11 +80,13 @@ class Admin extends CI_Controller {
         {
             if ($this->basic_auth->login($user, $pass))
             {
+                $redirect = $this->session->userdata('returnurl');
                 $this->session->unset_userdata('returnurl');
-                redirect('admin/');
+                redirect($redirect);
             }
             else
             {
+                log_message('error', 'Failed login u:' . $user . ' p:' . $pass . ' uri:' . uri_string());
                 $data['errors'][] = "Username or password were incorrect. Please try again.";
             }
         }
