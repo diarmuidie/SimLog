@@ -309,10 +309,12 @@ class Admin extends CI_Controller {
 
         }
 
-        // Sort the caches newest to oldest
-        usort($data['caches'], function($a, $b) {
-                return $b['expire'] - $a['expire'];
-            });
+        if ($data['caches']) {
+            // Sort the caches newest to oldest
+            usort($data['caches'], function($a, $b) {
+                    return $b['expire'] - $a['expire'];
+                });
+        }
 
         $this->data['content'] = $this->load->view('admin/cache', $data, TRUE);
         $this->load->view('admin/template', $this->data);
