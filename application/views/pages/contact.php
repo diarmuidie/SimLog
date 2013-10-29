@@ -9,4 +9,4 @@
 </ul>
 
 
-<a href="<?php echo base_url(); ;?>8AA7DB0B.asc" class="centre">PGP public Key</a> (<a href="http://www.qdog.com/pgp/pgp_faq.html">what is this?</a>)
+<p class="center"><a href="<?php echo base_url(); ;?>8AA7DB0B.asc">PGP public Key</a> (<a href="http://www.qdog.com/pgp/pgp_faq.html">what is this?</a>)</p>
