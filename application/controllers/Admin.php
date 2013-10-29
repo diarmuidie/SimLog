@@ -52,19 +52,21 @@ class Admin extends CI_Controller {
             switch ($this->basic_auth->get_error())
             {
                 case basic_auth::ERROR_USER_NOT_AUTHORIZED:
-                    $redirect = 'admin/login';
-                    $this->session->set_userdata('returnurl', uri_string());
+                    if (!$this->session->userdata('returnurl')) {
+                        $this->session->set_userdata('returnurl', uri_string());
+                    }
                     break;
 
                 case basic_auth::ERROR_USER_NOT_LOGGED_IN:
-                    $redirect = 'admin/login';
-                    $this->session->set_userdata('returnurl', uri_string());
+                    if (!$this->session->userdata('returnurl')) {
+                        $this->session->set_userdata('returnurl', uri_string());
+                    }
                     break;
                 default:
                     break;
             }
 
-            redirect($redirect);
+            redirect('admin/login');
         }
     }
 
@@ -78,9 +80,9 @@ class Admin extends CI_Controller {
 
         if (!empty($submitted))
         {
+            $redirect = $this->session->userdata('returnurl');
             if ($this->basic_auth->login($user, $pass))
             {
-                $redirect = $this->session->userdata('returnurl');
                 $this->session->unset_userdata('returnurl');
                 log_message('info', 'Successful login u:' . $user . ' uri:' . $redirect);
                 redirect($redirect);
