@@ -12,7 +12,7 @@
 </form>
 
 <form class="form-post well" method="post">
-    <table class="table table-hover well">
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>Image</th>
