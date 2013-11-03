@@ -312,7 +312,7 @@ class Admin extends CI_Controller {
 
         }
 
-        if ($data['caches']) {
+        if (array_key_exists('caches', $data)) {
             // Sort the caches newest to oldest
             usort($data['caches'], function($a, $b) {
                     return $b['expire'] - $a['expire'];
