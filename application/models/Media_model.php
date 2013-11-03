@@ -31,6 +31,7 @@ class Media_model extends CI_Model {
                     'url' => "//" . $url['host'] . $url['path'] . "media/" . $file,
                     'mime' => get_mime_by_extension($file),
                     'extension' => pathinfo ($file, PATHINFO_EXTENSION),
+                    'path' => $folder . $file
                 );
             }
         }
@@ -55,7 +56,6 @@ class Media_model extends CI_Model {
 
     function resize($file, $width = self::WIDTH) {
 
-        $path = pathinfo($file);
         $dims = getimagesize($file);
 
         // Risize if the image is too big
@@ -66,7 +66,7 @@ class Media_model extends CI_Model {
             ini_set('memory_limit', '324M');
 
             // Backup the original file
-            copy($file, $path['dirname'] . '/' . $path['filename'] . '_original' . '.' . $path['extension']);
+            copy($file, $this->append_identifier($file, '_original'));
 
             $config = array(
                 'source_image' => $file,
@@ -82,10 +82,10 @@ class Media_model extends CI_Model {
             // If the image is big enough generate a 2x retina version
             if ($dims[0] >= $width * 1.5) {
                 $config = array(
-                    'source_image' => $path['dirname'] . '/' . $path['filename'] . '_original' . '.' . $path['extension'],
+                    'source_image' =>  $this->append_identifier($file, '_original'),
                     'master_dim' => 'width',
                     'width' => $width * 2,
-                    'new_image' => $path['dirname'] . '/' . $path['filename'] . '@2x' . '.' . $path['extension']
+                    'new_image' =>  $this->append_identifier($file, '@2x')
                 );
                 $this->image_lib->initialize($config);
                 $this->image_lib->resize();
@@ -97,6 +97,24 @@ class Media_model extends CI_Model {
             ini_set('memory_limit', $memory_limit);
 
         }
+    }
+
+    private function append_identifier($path, $identifier) {
+
+        $pathinfo = pathinfo($path);
+
+        return $pathinfo['dirname'] . '/' . $pathinfo['filename'] . $identifier . '.' . $pathinfo['extension'];
+    }
+
+    public function delete($filename, $delete_thumb = false) {
+
+        @unlink($filename);
+
+        if ($delete_thumb) {
+            @unlink($this->append_identifier($filename, '_original'));
+            @unlink($this->append_identifier($filename, '@2x'));
+        }
+
     }
 
 }

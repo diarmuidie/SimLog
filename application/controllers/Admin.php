@@ -235,6 +235,11 @@ class Admin extends CI_Controller {
         $delete = $this->input->post('delete');
         $this->load->model('Media_model');
 
+        if (!empty($delete)) {
+            $this->Media_model->delete($delete, true);
+            redirect('admin/media');
+        }
+
         if (!empty($upload)) {
 
             $config['upload_path'] = './media/';
