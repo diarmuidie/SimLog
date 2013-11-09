@@ -1,6 +1,6 @@
 @grey: #333333;
 @lightgrey: #888888;
-@blue: #3c87c4;
+@blue: #00adee; //#3c87c4
 @width: 720px;
 
 @import "normalize.min.less";
@@ -134,6 +134,19 @@ header {
   }
   #disqus_thread {
     margin-top: 60px;
+  }
+  hr {
+    border: none;
+    display: block;
+    margin-bottom: 2.5em;
+    text-align: center;
+    font-size: 1.2em;
+  }
+  hr:after {
+    color: @blue;
+    content: "\2022 \2022 \2022";
+    display: block;
+    line-height: 0.5em;
   }
 }
 
