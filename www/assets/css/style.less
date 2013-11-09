@@ -1,6 +1,7 @@
 @grey: #333333;
 @lightgrey: #888888;
 @blue: #00adee; //#3c87c4
+@darkblue: #027eac;
 @width: 720px;
 
 @import "normalize.min.less";
@@ -25,8 +26,13 @@ body {
 a {
   color: @blue;
   text-decoration: none;
+  -moz-transition: all 0.15s linear;
+  -ms-transition: all 0.15s linear;
+  -o-transition: all 0.15s linear;
+  -webkit-transition: all 0.15s linear;
+  transition: all 0.15s linear;
   &:hover {
-    color: @grey;
+    color: @darkblue;
   }
 }
 
