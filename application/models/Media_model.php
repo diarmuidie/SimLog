@@ -36,6 +36,7 @@ class Media_model extends CI_Model {
                     'size' => $file['size']
                 );
             }
+            $filenames[] = $file['name'];
         }
 
         // Find the original and 2x version if it exists
@@ -43,11 +44,11 @@ class Media_model extends CI_Model {
             $original = pathinfo($file['filename'], PATHINFO_FILENAME) . '_original.' . pathinfo($file['filename'], PATHINFO_EXTENSION);
             $zoom = pathinfo($file['filename'], PATHINFO_FILENAME) . '@2x.' . pathinfo($file['filename'], PATHINFO_EXTENSION);
 
-            if (in_array($original, $files)) {
+            if (in_array($original, $filenames)) {
                 $return[$key]['original'] = $original;
             }
 
-            if (in_array($zoom, $files)) {
+            if (in_array($zoom, $filenames)) {
                 $return[$key]['2x'] = $zoom;
             }
 
