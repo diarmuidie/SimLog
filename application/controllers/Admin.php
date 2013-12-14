@@ -160,6 +160,8 @@ class Admin extends CI_Controller {
             } else {
 
                 $entry = $this->Post_model->add_entry($data);
+                $this->Tag_model->add_tags($this->input->post('tags'), $entry);
+
                 redirect('admin/edit/' . $entry);
             }
 
