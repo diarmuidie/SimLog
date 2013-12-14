@@ -14,7 +14,7 @@ class Media_model extends CI_Model {
     function get_media($folder) {
         $this->load->helper('file');
 
-        $files = get_filenames($folder);
+        $files = get_dir_file_info($folder, TRUE);
 
         $return = array();
         $url = parse_url(base_url());
@@ -22,16 +22,18 @@ class Media_model extends CI_Model {
         foreach ($files as $file) {
 
             // Only include the base image and exclude index.html
-            if (substr(pathinfo($file, PATHINFO_FILENAME), -8) != 'original'
-                AND substr(pathinfo($file, PATHINFO_FILENAME), -3) != '@2x'
-                AND $file != 'index.html') {
+            if (substr(pathinfo($file['name'], PATHINFO_FILENAME), -8) != 'original'
+                AND substr(pathinfo($file['name'], PATHINFO_FILENAME), -3) != '@2x'
+                AND $file['name'] != 'index.html') {
 
                 $return[] = array(
-                    'filename' => $file,
-                    'url' => "//" . $url['host'] . $url['path'] . "media/" . $file,
-                    'mime' => get_mime_by_extension($file),
-                    'extension' => pathinfo ($file, PATHINFO_EXTENSION),
-                    'path' => $folder . $file
+                    'filename' => $file['name'],
+                    'url' => "//" . $url['host'] . $url['path'] . "media/" . $file['name'],
+                    'mime' => get_mime_by_extension($file['name']),
+                    'extension' => pathinfo ($file['name'], PATHINFO_EXTENSION),
+                    'path' => $file['server_path'],
+                    'date' => $file['date'],
+                    'size' => $file['size']
                 );
             }
         }
@@ -50,6 +52,11 @@ class Media_model extends CI_Model {
             }
 
         }
+
+        // Sort by modified date (newest first)
+        usort($return, function($a, $b) {
+                return $b['date'] - $a['date'];
+            });
 
         return $return;
     }
