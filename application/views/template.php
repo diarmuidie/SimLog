@@ -40,6 +40,12 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/retina.min.js"></script>
 <?php } ?>
 
+<?php if($this->uri->segment(1) == 'blog') { ?>
+<link rel="stylesheet" href="<?php echo base_url();?>assets/css/highlight/solarized_dark.css">
+<script src="<?php echo base_url();?>assets/js/highlight.7.5.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<?php } ?>
+
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -48,7 +54,6 @@
 
     ga('create', 'UA-45221135-1', 'diarmuid.ie');
     ga('send', 'pageview');
-
 </script>
 
 </body>

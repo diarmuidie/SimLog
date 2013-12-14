@@ -5,6 +5,7 @@
 @width: 720px;
 
 @import "normalize.min.less";
+@import "highlight/solarized_dark.less";
 
 @font-face {
   font-family: 'gooddogregular';
@@ -179,32 +180,8 @@ header {
   display: inline-block;
 }
 
-code, pre {
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
-}
-
-pre {
-  display: block;
-  padding: 9.5px;
-  margin: 0 0 10px;
-  font-size: 13px;
-  line-height: 1.428571429;
-  color: #333333;
-  word-break: break-all;
-  word-wrap: break-word;
-  background-color: #f5f5f5;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  white-space: pre-wrap;
-}
-
 code {
-  padding: 2px 4px;
-  font-size: 90%;
-  color: #c7254e;
-  white-space: nowrap;
-  background-color: #f9f2f4;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 footer {

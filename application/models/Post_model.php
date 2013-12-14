@@ -121,7 +121,7 @@ class Post_model extends CI_Model {
 
     }
 
-    function markdown($markdown, $extra = FALSE) {
+    function markdown($markdown, $extra = TRUE) {
 
         if ($extra) {
             $markdownParser = new \dflydev\markdown\MarkdownExtraParser();
