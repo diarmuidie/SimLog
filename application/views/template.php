@@ -41,7 +41,6 @@
 <?php } ?>
 
 <?php if($this->uri->segment(1) == 'blog') { ?>
-<link rel="stylesheet" href="<?php echo base_url();?>assets/css/highlight/solarized_dark.css">
 <script src="<?php echo base_url();?>assets/js/highlight.7.5.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <?php } ?>
