@@ -9,7 +9,7 @@
             <p>Tags:</p>
             <ul>
                 <?php if ($tags) { foreach ($tags as $tag) { ?>
-                <li><?php echo $tag; ?></li>
+                <li><?php echo $tag['tag']; ?></li>
                 <?php } } ?>
             </ul>
         </div>
