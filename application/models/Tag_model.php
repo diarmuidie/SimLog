@@ -52,7 +52,7 @@ class Tag_model extends CI_Model {
             }
             return $return;
         }
-        return $results;
+        return $results[0];
     }
 
     function get_tag($tag) {

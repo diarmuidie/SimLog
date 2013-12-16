@@ -27,13 +27,14 @@ class Blog extends My_Controller {
         $this->load->model('Post_model');
 
         $entry = $this->Post_model->get_entry_slug($slug);
+        $tags = $this->Tag_model->get_post_tags($entry['id']);
 
         if(is_null($entry)) {
             show_404();
         }
 
         $this->template['title'] .= $entry['title'];
-        $this->template['content'] = $this->load->view('blog/post', array('entry' => $entry), true);
+        $this->template['content'] = $this->load->view('blog/post', array('entry' => $entry, 'tags' => $tags), true);
         $this->load->view('template', $this->template);
     }
 

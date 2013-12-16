@@ -5,6 +5,15 @@
                 <?php echo $entry['html']; ?>
         </article>
 
+        <div class="tags">
+            <p>Tags:</p>
+            <ul>
+                <?php if ($tags) { foreach ($tags as $tag) { ?>
+                <li><?php echo $tag; ?></li>
+                <?php } } ?>
+            </ul>
+        </div>
+
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             var disqus_shortname = 'diarmuid'; // required: replace example with your forum shortname
