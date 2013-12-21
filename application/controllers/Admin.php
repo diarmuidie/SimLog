@@ -332,20 +332,38 @@ class Admin extends CI_Controller {
 
     }
 
+    /*
+     * Preview draft posts
+     */
     public function preview($id) {
 
-        $data = $this->Post_model->get_entry_id($id);
+        $entry = $this->Post_model->get_entry_id($id);
 
-        $data['html'] = $this->Post_model->markdown($data['markdown']);
+        // No post with this id found
+        if(is_null($entry)) {
+            show_404();
+        }
 
-        $this->data['content'] = $this->load->view('admin/preview', $data, TRUE);
+        $tags = $this->Tag_model->get_post_tags($id);
 
-        $this->data['navbar'] = '';
-        $this->data['title'] = 'Preview :: ' . $data['title'];
-        $this->load->view('admin/template', $this->data);
+        $this->data['content'] = $this->load->view('blog/post', array('entry' => $entry, 'tags' => $tags), true);
 
+        if (is_null($entry['published']) or !strtotime($entry['published'])) {
+            $entry['published'] = date('Y-m-d H:i:s');
+        }
+
+        $this->template['navbar'] = '';
+        $this->template['footer'] = '';
+        $this->template['title'] = $entry['title'];
+
+        $this->template['content'] = $this->load->view('blog/preview', array('entry' => $entry, 'tags' => $tags), true);
+        $this->load->view('template', $this->template);
     }
 
+    /*
+     * Return all tags as JSON. Used in Admin UI to auto
+     * complete tag entry.
+     */
     public function tags_list() {
 
         $tags = $this->Tag_model->get_all_tags();
