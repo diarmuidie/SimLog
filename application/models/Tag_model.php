@@ -68,14 +68,19 @@ class Tag_model extends CI_Model {
 
     function add_tags($tag_string, $post_id) {
 
-        $tags = explode(',', $tag_string);
-
+        // Unlink from all existing tags
         $this->unlink_post($post_id);
 
-        foreach ($tags as $tag) {
-            $this->link_tag($tag, $post_id);
-        }
+        // Check if any tags were sent
+        if (strlen($tag_string) > 0) {
 
+            $tags = explode(',', $tag_string);
+
+            // Relink to all new tags
+            foreach ($tags as $tag) {
+                $this->link_tag($tag, $post_id);
+            }
+        }
     }
 
     function add_tag($tag) {
