@@ -1,7 +1,7 @@
 <?php
 
-if ( ! function_exists('url_title'))
-{
+//if ( ! function_exists('url_title'))
+//{
 	/**
 	 * Create URL Title
 	 *
@@ -18,7 +18,9 @@ if ( ! function_exists('url_title'))
 	 */
 	function url_title($str, $separator = '-', $lowercase = FALSE)
 	{
-        $str = iconv('UTF-8', 'ASCII//TRANSLIT', $str); //Transliterate into ASCII
+
+	setlocale(LC_CTYPE, 'en_IE.UTF-8');
+	$str = iconv('UTF-8', 'ASCII//TRANSLIT', $str); //Transliterate into ASCII
 
         if ($separator === 'dash')
 		{
@@ -51,6 +53,6 @@ if ( ! function_exists('url_title'))
 
 		return trim(trim($str, $separator));
 	}
-}
+//}
 
 // ------------------------------------------------------------------------
