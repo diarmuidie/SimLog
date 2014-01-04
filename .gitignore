@@ -9,6 +9,7 @@ application/logs/*
 !application/logs/.htaccess
 
 /vendor/
+/www/assets/bower/
 
 application/config/development
 application/config/production
