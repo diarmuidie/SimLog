@@ -1,0 +1,27 @@
+{
+  "name": "Simlog",
+  "version": "1.0.0",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "retina.js": "1.2.*",
+    "highlightjs": "7.5.*",
+    "EpicEditor": "0.2.*",
+    "typeahead.js": "0.9.*",
+    "jquery": "1.10.*",
+    "bootstrap": "3.0.*",
+    "bootstrap-tagsinput": "0.3.*"
+  },
+  "authors": [
+    "diarmuid <contact@diarmuid.ie>"
+  ],
+  "license": "MIT",
+  "private": true
+}

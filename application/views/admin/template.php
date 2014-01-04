@@ -8,7 +8,7 @@
     <title><?php echo $title; ?></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?php echo base_url(); ?>assets/css/admin/bootstrap.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/bower/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="<?php echo base_url(); ?>assets/css/admin/custom.css" rel="stylesheet">
@@ -28,9 +28,9 @@
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/admin/epiceditor.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/admin/bootstrap-tagsinput.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/admin/typeahead.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/bower/EpicEditor/epiceditor/js/epiceditor.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/bower/bootstrap-tagsinput/dist/bootstrap-tagsinput.js"></script>
+    <script src="<?php echo base_url(); ?>assets/bower/typeahead.js/dist/typeahead.min.js"></script>
 
 </body>
 </html>
