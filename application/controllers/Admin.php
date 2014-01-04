@@ -13,9 +13,11 @@ class Admin extends CI_Controller {
         //comment out this line to remove all authorization requirements
         $this->_authorize();
 
+        // Autoload the Post and Tag models.
         $this->load->model('Post_model');
         $this->load->model('Tag_model');
 
+        // Define the data array and preload some defaults
         $this->data = array(
             'title' => 'Admin :: Diarmuid.ie',
             'content' => '',
@@ -28,21 +30,12 @@ class Admin extends CI_Controller {
     {
         $this->load->library('Basic_auth');
 
-        /*
-         * The set_protected_methods takes an associative array of all of the
-         * method names that will be protected. The key is the method name while
-         * the value is a comma-delimited list of groups allowed to access the
-         * method.
-         *
-         * Using '*' as the key will protect all methods in the controller. Be
-         * aware that using '*' will require that any authorization (login,
-         * logout, etc.) be done in a different controller because those methods
-         * would be protected as well.
-         */
+        // Define all the methods that require authentication to view.
         $this->basic_auth->set_protected_methods(array(
                 '*' => 'user,admins',
             ));
 
+        // Define all the unprotected methods. Login should be unprotected!
         $this->basic_auth->set_unprotected_methods(array(
                 'login'
             ));
@@ -66,6 +59,7 @@ class Admin extends CI_Controller {
                     break;
             }
 
+            // Redirect back to the login page on error.
             redirect('admin/login');
         }
     }
@@ -78,9 +72,12 @@ class Admin extends CI_Controller {
         $pass = $this->input->post('password');
         $submitted = $this->input->post('submit');
 
+        // If a login attempt has been submitted
         if (!empty($submitted))
         {
             $redirect = $this->session->userdata('returnurl');
+
+            // Check username and pass
             if ($this->basic_auth->login($user, $pass))
             {
                 $this->session->unset_userdata('returnurl');
@@ -106,6 +103,9 @@ class Admin extends CI_Controller {
         redirect('/');
     }
 
+    /*
+     * The main function for the Admin controller. Lists current posts.
+     */
     public function index()
     {
 
@@ -117,6 +117,9 @@ class Admin extends CI_Controller {
 
     }
 
+    /*
+     * Lists all draft posts
+     */
     public function draft() {
 
         $data['entries'] = $this->Post_model->get_draft_entries();
@@ -126,6 +129,9 @@ class Admin extends CI_Controller {
 
     }
 
+    /*
+     * Add a post function
+     */
     public function add() {
 
         $submitted = $this->input->post('submit');
@@ -136,8 +142,10 @@ class Admin extends CI_Controller {
             'published' => '',
         );
 
+        // Check if a data has been posted
         if (!empty($submitted))
         {
+            // Check if the published field is set and format as MySQL datestamp
             if(!$this->input->post('published') AND $this->input->post('published') == "") {
                 $published = Null;
             } else {
@@ -153,12 +161,14 @@ class Admin extends CI_Controller {
                 'added' => date('Y-m-d H:i:s')
             );
 
+            // Check if the Post slug is set and unique.
             if (url_title($this->input->post('title')) == '') {
                 $this->data['error'] = 'Title Cannot be blank';
             } elseif (!$this->Post_model->check_unique_slug(url_title($this->input->post('title')))) {
                 $this->data['error'] = 'Title already in use';
             } else {
 
+                // save post and tags to the DB
                 $entry = $this->Post_model->add_entry($data);
                 $this->Tag_model->add_tags($this->input->post('tags'), $entry);
 
@@ -172,14 +182,18 @@ class Admin extends CI_Controller {
 
     }
 
+    /*
+     * Edit an existing post
+     */
     public function edit($id) {
 
         $submitted = $this->input->post('submit');
         $delete = $this->input->post('delete');
 
+        // Check if a data has been posted
         if (!empty($submitted))
         {
-
+            // Check if the published field is set and format as MySQL datestamp
             if(!$this->input->post('published') AND $this->input->post('published') == "") {
                 $published = Null;
             } else {
@@ -196,26 +210,33 @@ class Admin extends CI_Controller {
                 'id' => $id
             );
 
+            // Check if the Post slug is set and unique.
             if (!$this->Post_model->check_unique_slug(url_title($this->input->post('title')), $id)) {
                 $this->data['error'] = 'Title already in use';
             } else {
 
+                // save post and tags to the DB
                 $this->Post_model->update_entry($data);
-
                 $this->Tag_model->add_tags($this->input->post('tags'), $id);
 
-                //Clear the caches
+                //Clear the cached posts
                 $this->output->clear_all_cache();
 
                 redirect('admin/edit/' . $id);
             }
 
-        } elseif(!empty($delete)) {
+        }
+
+        // Delete the post
+        elseif(!empty($delete)) {
 
             $this->Post_model->delete_entry($id);
             redirect('admin/');
 
-        } else {
+        }
+
+        // Display the post in the edit view
+        else {
 
             $data = $this->Post_model->get_entry_id($id);
             $data['tags'] = $this->Tag_model->get_post_tags($id, True);
@@ -231,19 +252,25 @@ class Admin extends CI_Controller {
 
     }
 
+    /*
+     * Display uploaded media (images, video etc).
+     */
     public function media() {
 
         $upload = $this->input->post('upload');
         $delete = $this->input->post('delete');
         $this->load->model('Media_model');
 
+        // Check if the delete post is set
         if (!empty($delete)) {
             $this->Media_model->delete($delete, true);
             redirect('admin/media');
         }
 
+        // Check if an upload is being sent
         if (!empty($upload)) {
 
+            // Uses the built in Codeigniter upload library
             $config['upload_path'] = './media/';
             $config['allowed_types'] = 'gif|jpg|jpeg|tiff|png|mp3|wav|mp4|flv|avi';
 
@@ -275,6 +302,10 @@ class Admin extends CI_Controller {
 
     }
 
+    /*
+     * Displays the pages that are currently in the
+     * Codeigniter file cache. Also lets you Purge the cache.
+     */
     public function cache() {
 
         $purge = $this->input->post('purge');
@@ -293,7 +324,7 @@ class Admin extends CI_Controller {
 
         $data = array();
 
-        // TODO: Move all this code into some sort of model
+        // TODO: Move all this code into a seperate model
         foreach($caches as $cache) {
 
             if ($cache != 'index.html') {

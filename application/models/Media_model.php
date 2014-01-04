@@ -9,8 +9,13 @@
 
 class Media_model extends CI_Model {
 
+    // This is the width that images need to be for your template (in px)
     const WIDTH = 720;
 
+    /*
+     * returns back an array of all the media in a folder with a bunch of
+     * info about each one.
+     */
     function get_media($folder) {
         $this->load->helper('file');
 
@@ -62,6 +67,10 @@ class Media_model extends CI_Model {
         return $return;
     }
 
+    /*
+     * Function to resize images to a small version and a 2x retina version
+     * if the resolution of the original allows.
+     */
     function resize($file, $width = self::WIDTH) {
 
         $dims = getimagesize($file);
@@ -107,6 +116,9 @@ class Media_model extends CI_Model {
         }
     }
 
+    /*
+     * Returns the path with an identifier
+     */
     private function append_identifier($path, $identifier) {
 
         $pathinfo = pathinfo($path);
@@ -114,6 +126,9 @@ class Media_model extends CI_Model {
         return $pathinfo['dirname'] . '/' . $pathinfo['filename'] . $identifier . '.' . $pathinfo['extension'];
     }
 
+    /*
+     * Delete image
+     */
     public function delete($filename, $delete_thumb = false) {
 
         @unlink($filename);

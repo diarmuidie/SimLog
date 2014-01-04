@@ -2,6 +2,9 @@
 
 /**
  * Class MY_Output
+ *
+ * Extend the CI_Output class to include some functions to work with
+ * the cache (clear etc).
  */
 class MY_Output extends CI_Output
 {
@@ -28,7 +31,7 @@ class MY_Output extends CI_Output
     }
 
     /**
-     * Write Cache
+     * Write Cache including page URI in serialised data
      *
      * @param	string	$output	Output data to cache
      * @return	void

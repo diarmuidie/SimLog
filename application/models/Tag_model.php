@@ -42,9 +42,11 @@ class Tag_model extends CI_Model {
 
         $results = $query->result_array();
 
+        // if string is true return a comma separated list of tags
         if ($string) {
             $return = False;
             foreach ($results as $result) {
+                // Check if this is the first tag in the string
                 if (!$return) {
                     $return = $result['tag'];
                 }
