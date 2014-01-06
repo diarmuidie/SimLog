@@ -31,9 +31,15 @@ class Blog extends My_Controller {
         if ($slug === NULL) {
             redirect('blog');
         }
+
+        // Permanently redirect uppercase slugs to lowercase
+        if (strtolower($slug) != $slug) {
+            redirect('/blog/post/'.strtolower($slug), 'location', 301);
+        }
+
         $this->load->model('Post_model');
 
-        $entry = $this->Post_model->get_entry_slug($slug);
+        $entry = $this->Post_model->get_entry_slug(strtolower($slug));
 
         // No post with this slug found
         if(is_null($entry)) {

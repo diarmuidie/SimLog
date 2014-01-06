@@ -154,7 +154,7 @@ class Admin extends CI_Controller {
 
             $data = array(
                 'title' => $this->input->post('title'),
-                'slug' => url_title($this->input->post('title')),
+                'slug' => url_title($this->input->post('title'), '-', TRUE),
                 'markdown' => $this->input->post('markdown'),
                 'published' => $published,
                 'html' => $this->Post_model->markdown($this->input->post('markdown')),
@@ -162,9 +162,9 @@ class Admin extends CI_Controller {
             );
 
             // Check if the Post slug is set and unique.
-            if (url_title($this->input->post('title')) == '') {
+            if (url_title($this->input->post('title'), '-', TRUE) == '') {
                 $this->data['error'] = 'Title Cannot be blank';
-            } elseif (!$this->Post_model->check_unique_slug(url_title($this->input->post('title')))) {
+            } elseif (!$this->Post_model->check_unique_slug(url_title($this->input->post('title'), '-', TRUE))) {
                 $this->data['error'] = 'Title already in use';
             } else {
 
@@ -202,7 +202,7 @@ class Admin extends CI_Controller {
 
             $data = array(
                 'title' => $this->input->post('title'),
-                'slug' => url_title($this->input->post('title')),
+                'slug' => url_title($this->input->post('title'), '-', TRUE),
                 'markdown' => $this->input->post('markdown'),
                 'edited' => date('Y-m-d H:i:s'),
                 'published' => $published,
@@ -211,7 +211,7 @@ class Admin extends CI_Controller {
             );
 
             // Check if the Post slug is set and unique.
-            if (!$this->Post_model->check_unique_slug(url_title($this->input->post('title')), $id)) {
+            if (!$this->Post_model->check_unique_slug(url_title($this->input->post('title'), '-', TRUE), $id)) {
                 $this->data['error'] = 'Title already in use';
             } else {
 

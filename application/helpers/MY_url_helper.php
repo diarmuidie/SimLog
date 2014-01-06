@@ -19,8 +19,8 @@
 	function url_title($str, $separator = '-', $lowercase = FALSE)
 	{
 
-	setlocale(LC_CTYPE, 'en_IE.UTF-8');
-	$str = iconv('UTF-8', 'ASCII//TRANSLIT', $str); //Transliterate into ASCII
+	    setlocale(LC_CTYPE, 'en_IE.UTF-8');
+	    $str = iconv('UTF-8', 'ASCII//TRANSLIT', $str); //Transliterate into ASCII
 
         if ($separator === 'dash')
 		{
