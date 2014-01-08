@@ -8,7 +8,7 @@ class MY_Controller extends CI_Controller
 
         // Auto populate the template with some defaults
         $this->template = array(
-            'title' => 'Diarmuid.ie :: ',
+            'title' => 'Diarmuid.ie - ',
             'navbar' => $this->load->view('navbar', null, true),
             'content' => '',
             'footer' => ''
