@@ -162,6 +162,8 @@ class Basic_auth
     {
         $this->logout();
 
+        $username = strtolower($username);
+
         if($this->password_type == 'sha1')
         {
             $password = sha1($password);
