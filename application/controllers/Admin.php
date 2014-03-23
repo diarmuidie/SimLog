@@ -245,6 +245,8 @@ class Admin extends CI_Controller {
                 $data['published'] = date('Y-m-d',strtotime($data['published']));
             }
 
+            $data['title'] = htmlentities($data['title']);
+
         }
 
         $this->data['content'] = $this->load->view('admin/edit', $data, TRUE);
